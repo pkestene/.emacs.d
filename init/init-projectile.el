@@ -31,7 +31,10 @@
 (use-package projectile
   :ensure t
   :hook   ((prog-mode text-mode) . projectile-mode)
-  :config (setq projectile-enable-caching t))
+  :config (setq projectile-enable-caching t)
+  ;;(setq projectile-completion-system 'default)
+  (setq projectile-completion-system 'ivy)
+  )
 
 (provide 'init-projectile)
 ;;; init-projectile.el ends here

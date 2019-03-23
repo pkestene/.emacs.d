@@ -75,6 +75,7 @@ There are two things you can do about this warning:
 (require 'init-company)
 (require 'init-csv)
 (require 'init-edit)
+(require 'init-git)
 ;;(require 'init-helm) ;; use either helm or ivy, but not both
 (require 'init-ivy)
 (require 'init-julia)
