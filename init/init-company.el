@@ -44,5 +44,18 @@
     :if (display-graphic-p)
     :hook (company-mode . company-box-mode)))
 
+;; https://github.com/Sarcasm/company-irony
+(use-package company-irony
+  :ensure t
+  :after (company irony)
+  :config (add-to-list 'company-backends 'company-irony))
+
+;; https://github.com/hotpxl/company-irony-c-headers
+(use-package company-irony-c-headers
+  :ensure t
+  :after (company irony)
+  :config (add-to-list 'company-backends 'company-irony-c-headers))
+
+
 (provide 'init-company)
 ;;; init-company.el ends here
