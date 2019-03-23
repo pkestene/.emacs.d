@@ -6,10 +6,15 @@
 
 (use-package magit
   :ensure t
+  :commands magit-get-top-dir
+  :bind (("C-c g" . magit-status)
+         ("C-c C-g l" . magit-file-log)
+         ("C-c f" . magit-grep))
   :init
-  (progn
-    (bind-key "C-x g" 'magit-status)
-    ))
+  ;; magit extensions
+  (use-package magit-blame
+    :bind ("C-c C-g b" . magit-blame-mode))
+  )
 
 (use-package git-gutter
   :ensure t
@@ -60,3 +65,4 @@ Git gutter:
   (global-set-key (kbd "C-M--") 'default-text-scale-decrease))
 
 
+(provide 'init-git)
