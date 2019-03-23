@@ -76,6 +76,7 @@ There are two things you can do about this warning:
 (require 'init-csv)
 (require 'init-edit)
 (require 'init-helm)
+(require 'init-julia)
 (require 'init-lsp)
 (require 'init-md)
 (require 'init-python)
