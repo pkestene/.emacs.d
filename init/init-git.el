@@ -7,13 +7,13 @@
 (use-package magit
   :ensure t
   :commands magit-get-top-dir
-  :bind (("C-c g" . magit-status)
-         ("C-c C-g l" . magit-file-log)
-         ("C-c f" . magit-grep))
+  :bind (("M-g s" . magit-status)
+         ("M-g l" . magit-file-log)
+         ("M-g f" . magit-grep))
   :init
   ;; magit extensions
   (use-package magit-blame
-    :bind ("C-c C-g b" . magit-blame-mode))
+    :bind ("M-g b" . magit-blame-mode))
   )
 
 (use-package git-gutter
