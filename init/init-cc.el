@@ -44,7 +44,8 @@
 
 (use-package ccls
   :ensure t
-  :after (:all lsp-mode cc-mode cuda-mode))
+  :after (:all lsp-mode cc-mode))
+(setq ccls-executable "/home/pkestene/local/bin/ccls")
 
 (use-package modern-cpp-font-lock
   :ensure t

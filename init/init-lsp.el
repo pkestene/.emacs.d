@@ -36,6 +36,8 @@
 (use-package lsp-mode
   :ensure t
   :hook ((c-mode c++-mode objc-mode python-mode) . lsp)
+  :init
+  (setq lsp-clients-clangd-executable "/usr/bin/clangd-6.0")
   :config (use-package lsp-clients))
 
 (use-package lsp-ui
