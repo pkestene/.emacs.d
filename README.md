@@ -4,11 +4,25 @@
 
 To install the configuration, go into your home and clone the repository:
 ```shell
-cd ~ && git clone https://github.com/tpadioleau/.emacs.d.git
+cd ~ && git clone https://github.com/pkestene/.emacs.d.git
 ```
 Don't forget to remove any old .emacs.d configuration before cloning.
 
-## Usage
+## Requirement
+
+emacs-26
+
+On ubuntu (e.g. 18.04), just do the following to have emacs-26
+
+```shel
+sudo add-apt-repository ppa:kelleyk/emacs
+sudo apt update
+sudo apt install emacs26
+
+# next step is to make emacs-26 your default version (for both emacs and emacsclient)
+sudo update-alternatives --config emacs
+sudo update-alternatives --config emacsclient
+```
 
 ### Ccls
 
