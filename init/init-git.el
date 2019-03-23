@@ -23,7 +23,7 @@
 
 (use-package git-timemachine
   :ensure t
-  )
+  :bind ("M-g t" . git-timemachine-toggle))
 
 (when (package-installed-p 'hydra)
   (defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1)
