@@ -33,12 +33,18 @@
   :mode ("\\.[hH]\\'" . c++-mode)
   :config (progn (setq tab-always-indent 'complete)
                  (setq c-default-style "bsd")
-                 (setq c-basic-offset 4)
+                 (setq c-basic-offset 2)
                  (setq c-offsets-alist '((innamespace . 0)))))
+
+;; handle cuda files
+(use-package cuda-mode
+  :ensure t
+  :mode ("\\.cu\\'")
+        ("\\.cu\\'"))
 
 (use-package ccls
   :ensure t
-  :after (:all lsp-mode cc-mode))
+  :after (:all lsp-mode cc-mode cuda-mode))
 
 (use-package modern-cpp-font-lock
   :ensure t
