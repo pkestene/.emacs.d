@@ -32,3 +32,6 @@ recentf
 /places
 
 transient
+
+# irony server bin
+irony

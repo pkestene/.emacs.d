@@ -56,6 +56,15 @@
   :after (company irony)
   :config (add-to-list 'company-backends 'company-irony-c-headers))
 
+;; Code completion 
+;; you will also have to install irony server: M-x irony-install-server
+;;
+;; https://github.com/Sarcasm/irony-mode
+(use-package irony
+  :ensure t
+  :hook ((objc-mode c-mode c++-mode) . irony-mode)
+  :hook (irony-mode . irony-cdb-autosetup-compile-options)
+  :commands (irony-mode))
 
 (provide 'init-company)
 ;;; init-company.el ends here
