@@ -35,3 +35,5 @@ transient
 
 # irony server bin
 irony
+
+ac-comphist.dat
