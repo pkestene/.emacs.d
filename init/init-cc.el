@@ -39,8 +39,9 @@
 ;; handle cuda files
 (use-package cuda-mode
   :ensure t
-  :mode ("\\.cu\\'")
-        ("\\.cu\\'"))
+  :commands cuda-mode
+  :mode (("\\.cu\\'" . cuda-mode)
+         ("\\.cuh\\'" . cuda-mode)))
 
 (use-package ccls
   :ensure t
