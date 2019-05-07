@@ -8,4 +8,8 @@
   :config
   (editorconfig-mode 1))
 
-  (provide 'init-editorconfig)
+(use-package editorconfig-generate
+  :ensure t
+  )
+
+(provide 'init-editorconfig)
