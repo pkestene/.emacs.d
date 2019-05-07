@@ -86,6 +86,6 @@ There are two things you can do about this warning:
 (require 'init-utils)
 (require 'init-web)
 (require 'init-yasnippet)
-
+(require 'init-editorconfig)
 
 ;;; init.el ends here
