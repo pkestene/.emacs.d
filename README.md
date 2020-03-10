@@ -82,6 +82,20 @@ Currently, you will have to manually install [irony](https://github.com/Sarcasm/
 
 To improve reactivity, you may change parameter `company-idle-delay` and turn it into 0.
 
+### Python - LSP
+
+If you want to edit a python file, and if LSP (Language Server Protocol) tells you `Command "pyls" is not present on the path.`, you can customize file `init/init-lsp.el` and set variable `lsp-pyls-server-command` to the full path of `pyls`, e.g.
+
+``` emacs-lisp
+(use-package lsp-mode
+  :ensure t
+  :hook ((c-mode c++-mode objc-mode python-mode) . lsp)
+  :init
+  (setq lsp-clients-clangd-executable "/usr/bin/clangd-9"
+        lsp-pyls-server-command "/home/pkestene/local/miniconda3/envs/eclairs/bin/pyls")
+  :config (use-package lsp-clients))
+```
+
 ## Acknowledgements
 
 This emacs configuration is inspired by the [centaur](https://github.com/seagle0128/.emacs.d) configuration.
