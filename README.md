@@ -78,6 +78,10 @@ WantedBy=default.target
 
 Currently, you will have to manually install [irony](https://github.com/Sarcasm/irony-mode) server. From emacs, just type "M-x irony-install-server"
 
+### Company
+
+To improve reactivity, you may change parameter `company-idle-delay` and turn it into 0.
+
 ## Acknowledgements
 
 This emacs configuration is inspired by the [centaur](https://github.com/seagle0128/.emacs.d) configuration.
