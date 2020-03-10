@@ -96,6 +96,12 @@ If you want to edit a python file, and if LSP (Language Server Protocol) tells y
   :config (use-package lsp-clients))
 ```
 
+Don't forget to restart emacs server afterwards:
+
+``` shell
+systemctl restart --user emacsd
+```
+
 ## Acknowledgements
 
 This emacs configuration is inspired by the [centaur](https://github.com/seagle0128/.emacs.d) configuration.
