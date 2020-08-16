@@ -34,70 +34,79 @@
 (setq mouse-yank-at-point t)
 (setq load-prefer-newer t)
 (setq save-interprogram-paste-before-kill t)
-(setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups"))))
 (setq-default indent-tabs-mode nil)
 
 (set-selection-coding-system 'utf-8)
 (set-language-environment 'UTF-8)
 (prefer-coding-system 'utf-8)
 (setenv "LC_CTYPE" "UTF-8")
-(load-library "iso-transl") ; to use accents
+(require 'iso-transl) ; to use accents
 
 (use-package clean-aindent-mode
   :ensure t
-  :hook (after-init . clean-aindent-mode)
-  :config (progn (electric-indent-mode -1)
-		 (setq clean-aindent-is-simple-indent t)))
+  :hook
+  (after-init-hook . clean-aindent-mode)
+  :custom
+  (clean-aindent-is-simple-indent t)
+  :config
+  (electric-indent-mode -1))
 
 (use-package flyspell
-  :ensure t
-  :hook ((text-mode . flyspell-mode)
-         (prog-mode . flyspell-prog-mode))
-  :init (setq ispell-program-name "aspell"))
+  :ensure nil
+  :hook
+  ((text-mode-hook . flyspell-mode)
+   (prog-mode-hook . flyspell-prog-mode)))
 
-(use-package flyspell-correct-helm
+(use-package flyspell-correct
   :ensure t
-  :after (:all flyspell helm)
-  :bind ([down-mouse-3] . flyspell-correct-word-generic))
+  :after flyspell
+  :bind
+  (:map flyspell-mode-map ("C-;" . flyspell-correct-wrapper)))
 
 (use-package hungry-delete
   :ensure t
-  :bind	(("C-c DEL" . hungry-delete-backward)
-         ("C-c C-d" . hungry-delete-forward)))
+  :bind
+  (("C-c DEL" . hungry-delete-backward)
+   ("C-c C-d" . hungry-delete-forward)))
 
 (use-package mwim
   :ensure t
-  :bind (("C-a" . mwim-beginning-of-code-or-line)
-         ("C-e" . mwim-end-of-code-or-line)))
+  :bind
+  (("C-a" . mwim-beginning-of-code-or-line)
+   ("C-e" . mwim-end-of-code-or-line)))
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "<f5>") 'revert-buffer)
 
 (use-package saveplace
   :ensure nil
-  :hook (after-init . save-place-mode)
-  :init (setq save-place-file (concat user-emacs-directory "places")))
+  :hook
+  (after-init-hook . save-place-mode))
 
 (use-package smartparens
   :ensure t
-  :hook ((prog-mode text-mode) . smartparens-mode)
-  :config (use-package smartparens-config))
+  :hook
+  (prog-mode-hook . smartparens-mode)
+  :config
+  (use-package smartparens-config))
 
 (use-package undo-tree
   :ensure t
-  :hook (after-init . global-undo-tree-mode))
+  :hook
+  (after-init-hook . global-undo-tree-mode))
 
 (use-package uniquify
-  :ensure nil
-  :init (setq uniquify-buffer-name-style 'forward))
+  :ensure nil)
 
 (use-package windmove
   :ensure nil
-  :hook (after-init . windmove-default-keybindings))
+  :hook
+  (after-init-hook . windmove-default-keybindings))
 
 (use-package zygospore
   :ensure t
-  :bind ("C-x 1" . zygospore-toggle-delete-other-windows))
+  :bind
+  ("C-x 1" . zygospore-toggle-delete-other-windows))
 
 (provide 'init-edit)
 ;;; init-edit.el ends here

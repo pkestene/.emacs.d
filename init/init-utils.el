@@ -31,22 +31,15 @@
 
 (use-package which-key
   :ensure t
-  :hook   ((prog-mode text-mode) . which-key-mode)
-  :config (progn (setq which-key-idle-delay 2.0)
-		 (setq which-key-popup-type 'side-window)))
+  :hook
+  ((prog-mode-hook text-mode-hook) . which-key-mode)
+  :custom
+  (which-key-popup-type 'side-window))
 
 ;; profiling package
 (use-package esup
   :ensure t
-  :commands esup)
-
-(use-package pdf-tools
-  :ensure t
-  :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
-  :hook (pdf-view-mode . (lambda ()
-                           (display-line-numbers-mode -1)
-                           (projectile-mode -1)))
-  :config (pdf-tools-install))
+  :no-require t)
 
 (provide 'init-utils)
 ;;; init-utils.el ends here

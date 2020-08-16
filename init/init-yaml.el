@@ -1,6 +1,6 @@
-;; init-md.el --- Initialize markdown configuration.
+;;; init-yaml.el --- Initialize yaml mode.
 
-;; Copyright (C) 2019 Thomas Padioleau
+;; Copyright (C) 2020 Thomas Padioleau
 
 ;; Author: Thomas Padioleau <padioleau.thomas@gmail.com>
 ;; URL: https://github.com/tpadioleau/.emacs.d
@@ -24,16 +24,14 @@
 
 ;;; Commentary:
 
-;; Initialize markdown configuration.
+;; Initialize yaml mode.
 
 ;;; Code:
 
-(use-package markdown-mode
+(use-package yaml-mode
   :ensure t
   :mode
-  (("README\\.md\\'" . gfm-mode)
-   ("\\.md\\'" . markdown-mode)
-   ("\\.markdown\\'" . markdown-mode)))
+  (("\\.yml\\'" . yaml-mode)))
 
-(provide 'init-md)
-;;; init-md ends here
+(provide 'init-yaml)
+;;; init-yaml.el ends here

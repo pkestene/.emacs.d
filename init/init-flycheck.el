@@ -1,6 +1,6 @@
-;; init-md.el --- Initialize markdown configuration.
+;;; init-flycheck.el --- Initialize flycheck configuration.
 
-;; Copyright (C) 2019 Thomas Padioleau
+;; Copyright (C) 2020 Thomas Padioleau
 
 ;; Author: Thomas Padioleau <padioleau.thomas@gmail.com>
 ;; URL: https://github.com/tpadioleau/.emacs.d
@@ -24,16 +24,20 @@
 
 ;;; Commentary:
 
-;; Initialize markdown configuration.
+;; Initialize flycheck configuration.
 
 ;;; Code:
 
-(use-package markdown-mode
+(use-package flycheck
   :ensure t
-  :mode
-  (("README\\.md\\'" . gfm-mode)
-   ("\\.md\\'" . markdown-mode)
-   ("\\.markdown\\'" . markdown-mode)))
+  :hook
+  (prog-mode-hook . flycheck-mode))
 
-(provide 'init-md)
-;;; init-md ends here
+(use-package flymake-diagnostic-at-point
+  :ensure t
+  :disabled t
+  :hook
+  (flymake-mode-hook . flymake-diagnostic-at-point-mode))
+
+(provide 'init-flycheck)
+;;; init-flycheck.el ends here

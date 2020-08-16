@@ -11,7 +11,8 @@
 *.~undo-tree
 
 # Elpa folder
-elpa
+elpa/
+elpa.old/
 
 # Local configuration file
 garbage.el*
@@ -21,6 +22,7 @@ helm*
 
 # Projectile files
 projectile-bookmarks.eld
+projectile.cache
 
 # Recentf file
 recentf
@@ -36,4 +38,9 @@ transient
 # irony server bin
 irony
 
+# no-littering package
+etc/
+var/
+
 ac-comphist.dat
+*.el.old

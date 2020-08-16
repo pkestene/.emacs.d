@@ -1,8 +1,9 @@
-;; init-md.el --- Initialize markdown configuration.
+;; init-dired.el --- Initialize dired configuration.
 
 ;; Copyright (C) 2019 Thomas Padioleau
+;; Copyright (C) 2019 Vincent Zhang
 
-;; Author: Thomas Padioleau <padioleau.thomas@gmail.com>
+;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/tpadioleau/.emacs.d
 
 ;; This file is not part of GNU Emacs.
@@ -24,16 +25,19 @@
 
 ;;; Commentary:
 
-;; Initialize markdown configuration.
+;; Initialize dired configuration.
 
 ;;; Code:
 
-(use-package markdown-mode
+(use-package all-the-icons-dired
   :ensure t
-  :mode
-  (("README\\.md\\'" . gfm-mode)
-   ("\\.md\\'" . markdown-mode)
-   ("\\.markdown\\'" . markdown-mode)))
+  :hook
+  (dired-mode-hook . all-the-icons-dired-mode))
 
-(provide 'init-md)
-;;; init-md ends here
+(use-package diredfl
+  :ensure t
+  :hook
+  (dired-mode-hook . diredfl-mode))
+
+(provide 'init-dired)
+;;; init-dired.el ends here

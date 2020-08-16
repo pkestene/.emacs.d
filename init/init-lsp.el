@@ -28,31 +28,37 @@
 
 ;;; Code:
 
-(use-package company-lsp
-  :ensure t
-  :after (:all company lsp-mode)
-  :config (push 'company-lsp company-backends))
-
+;; Config to make it lsp-diagnose compliant
 (use-package lsp-mode
   :ensure t
-  :hook ((c-mode c++-mode objc-mode python-mode) . lsp)
-  :init
-  (setq lsp-clients-clangd-executable "/usr/bin/clangd-6.0")
-  :config (use-package lsp-clients))
+  :hook
+  ((c-mode-hook c++-mode-hook objc-mode-hook TeX-mode-hook
+                python-mode-hook sh-mode-hook) . lsp-deferred)
+  :custom
+  (lsp-completion-enable-additional-text-edit nil)
+  (lsp-enable-on-type-formatting nil)
+  (lsp-prefer-capf t)
+  (read-process-output-max (* 1024 1024))
+  :config
+  (remove-hook 'company-backends 'company-clang)
+  (progn
+    (setq lsp-prefer-flymake nil)))
 
 (use-package lsp-ui
   :ensure t
-  :after lsp-mode
-  :hook (lsp-mode . lsp-ui-mode)
-  :config (setq lsp-ui-doc-enable t
-                lsp-ui-imenu-enable t
-                lsp-ui-sideline-enable nil
-                lsp-ui-sideline-ignore-duplicate nil))
+  :hook
+  (lsp-mode-hook . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-enable t)
+  (lsp-ui-doc-position 'top)
+  (lsp-ui-doc-alignment 'window)
+  (lsp-ui-imenu-enable t)
+  (lsp-ui-sideline-enable nil)
+  (lsp-ui-sideline-ignore-duplicate nil))
 
-(use-package flymake-diagnostic-at-point
+(use-package format-all
   :ensure t
-  :after flymake
-  :hook (flymake-mode . flymake-diagnostic-at-point-mode))
+  :no-require t)
 
 (provide 'init-lsp)
 ;;; init-lsp.el ends here

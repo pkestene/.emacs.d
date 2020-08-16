@@ -31,32 +31,26 @@
 (use-package tex
   :ensure auctex
   :defer t
-  :config (progn
-            (setq TeX-auto-save t)
-            (setq TeX-parse-self t)
-            (setq TeX-view-program-selection '((output-pdf "PDF Tools")))
-            (setq TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view)))
-            (setq TeX-source-correlate-mode t)
-            (setq TeX-source-correlate-start-server t)
-            (setq TeX-source-correlate-method (quote synctex))
-            (add-hook 'TeX-after-compilation-finished-functions 'TeX-revert-document-buffer)
-            (add-hook 'LaTeX-mode-hook #'turn-on-reftex)
-            (setq reftex-plug-into-AUCTeX t)))
+  :custom
+  (TeX-auto-save t)
+  (TeX-parse-self t)
+  (TeX-view-program-selection '((output-pdf "PDF Tools")))
+  (TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view)))
+  (TeX-source-correlate-mode t)
+  :config
+  (add-hook 'TeX-after-compilation-finished-functions 'TeX-revert-document-buffer))
 
 (use-package reftex
-  :ensure t
-  :defer t
-  :config (setq reftex-cite-prompt-optional-args t))
-
-(use-package company-auctex
-  :ensure t
-  :after (:all auctex company yasnippet)
-  :config (progn (company-auctex-init)
-                 (push '(company-auctex-environments
-                         company-auctex-labels) company-backends)))
+  :ensure nil
+  :hook
+  (TeX-mode-hook . reftex-mode)
+  :custom
+  (reftex-cite-prompt-optional-args t)
+  (reftex-plug-into-AUCTeX t))
 
 (use-package academic-phrases
-  :ensure t)
+  :ensure t
+  :no-require t)
 
 (provide 'init-tex)
 ;;; init-tex ends here

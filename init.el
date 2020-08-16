@@ -28,14 +28,11 @@
 
 ;;; Code:
 
-;; Local customization is saved in custom-file.el. This prevents emacs
-;; from writing in this file. "noerror" allows to start emacs even if
-;; the custom-file doesn't exist.
-(setq custom-file "~/.emacs.d/garbage.el")
-(load custom-file 'noerror)
+(setq gc-cons-threshold (* 16 1024 1024))
 
 ;; This enables package
 (require 'package)
+
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
        (proto (if no-ssl "http" "https")))
@@ -50,7 +47,9 @@ There are two things you can do about this warning:
   (when (< emacs-major-version 24)
     ;; For important compatibility libraries like cl-lib
     (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
-(package-initialize)
+
+(when (< emacs-major-version 27)
+  (package-initialize))
 
 ;; Installs the package "use-package" if not installed
 (unless (package-installed-p 'use-package)
@@ -59,34 +58,64 @@ There are two things you can do about this warning:
 
 ;; Enables the package "use-package".
 (eval-when-compile
-  (require 'use-package))
-(use-package bind-key
-  :ensure t)
-(use-package diminish
+  (require 'use-package)
+  (setq use-package-hook-name-suffix nil))
+
+(use-package benchmark-init
   :ensure t)
 
+(use-package gcmh
+  :ensure t
+  :hook
+  (after-init-hook . gcmh-mode))
+
+(use-package bind-key
+  :ensure t)
+
+;; Avoids to spread configuration files.
+(use-package no-littering
+  :ensure t
+  :config
+  (setq auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
+        custom-file (no-littering-expand-etc-file-name "custom.el")))
+
 ;; Custom packages in .emacs.d/init
-(push (expand-file-name "init" user-emacs-directory) load-path)
+(push (expand-file-name "init/" user-emacs-directory) load-path)
 (require 'init-highlight)
 (require 'init-ui)
 
+;; (require 'init-helm) ;; use either helm or ivy, but not both
+(require 'init-ivy)
+
+(require 'init-company)
+(require 'init-edit)
+(require 'init-flycheck)
+(require 'init-lsp)
+(require 'init-projectile)
+(require 'init-utils)
+(require 'init-yasnippet)
+
+;; Major modes
 (require 'init-cc)
 (require 'init-cmake)
-(require 'init-company)
 (require 'init-csv)
-(require 'init-edit)
 (require 'init-format-all)
 (require 'init-git)
-;;(require 'init-helm) ;; use either helm or ivy, but not both
-(require 'init-ivy)
+
 (require 'init-julia)
-(require 'init-lsp)
+(require 'init-dired)
+(require 'init-emacs-lisp)
+(require 'init-ibuffer)
 (require 'init-md)
+(require 'init-pdf)
 (require 'init-python)
 (require 'init-tex)
-(require 'init-utils)
 (require 'init-web)
-(require 'init-yasnippet)
+(require 'init-yaml)
 (require 'init-editorconfig)
 
+;; Local customization is saved in etc/custom-file.el. This prevents
+;; emacs from writing in this file. "noerror" allows to start emacs
+;; even if the custom-file doesn't exist.
+(load custom-file 'noerror)
 ;;; init.el ends here

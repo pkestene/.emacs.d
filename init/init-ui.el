@@ -29,36 +29,60 @@
 
 ;;; Code:
 
-;; (menu-bar-mode -1)
-;; (when (fboundp 'tool-bar-mode)
-;;   (tool-bar-mode -1))
-;; (when (fboundp 'scroll-bar-mode)
-;;   (scroll-bar-mode -1))
-;; (when (fboundp 'horizontal-scroll-bar-mode)
-;;   (horizontal-scroll-bar-mode -1))
-(setq inhibit-startup-screen t)
-(setq frame-resize-pixelwise t)
-(toggle-frame-maximized)
+(unless (>= emacs-major-version 27)
+  (setq frame-inhibit-implied-resize t
+        frame-resize-pixelwise t)
+
+  ;;(push '(cursor-type . bar) default-frame-alist)
+  ;;(push '(fullscreen . maximized) default-frame-alist)
+  ;;(push '(horizontal-scroll-bars . nil) default-frame-alist)
+  ;;(push '(menu-bar-lines . 0) default-frame-alist)
+  ;;(push '(tool-bar-lines . 0) default-frame-alist)
+  ;;(push '(vertical-scroll-bars . nil) default-frame-alist)
+  )
+
+;; Avoid pulling in many packages by starting the scratch buffer in
+;; `fundamental-mode', rather than, say, `org-mode' or `text-mode'.
+(setq initial-major-mode 'fundamental-mode
+      initial-scratch-message nil)
+
+(use-package simple
+  :ensure nil
+  :hook
+  ((after-init-hook . column-number-mode)
+   (after-init-hook . line-number-mode)
+   (after-init-hook . size-indication-mode)))
+
+;; when running for the first time, you might need to run
+;; (all-the-icons-install-fonts)
+(use-package all-the-icons
+  :ensure t
+  :if (display-graphic-p)
+  :no-require t)
 
 (when (>= emacs-major-version 26)
   (use-package display-line-numbers
     :ensure nil
-    :hook (after-init . global-display-line-numbers-mode)
-    :hook (after-init . column-number-mode)))
+    :hook
+    ((prog-mode-hook text-mode-hook) . display-line-numbers-mode)
+    :custom
+    (display-line-numbers-width-start t)))
 
 (use-package doom-modeline
   :ensure t
-  :defer t
-  :hook (after-init . doom-modeline-mode)
-  :config (setq doom-modeline-icon nil))
+  :hook
+  (after-init-hook . doom-modeline-mode)
+  :custom
+  (doom-modeline-icon t))
 
 (use-package doom-themes
   :ensure t
-  :config (progn (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-                       doom-themes-enable-italic t) ; if nil, italics is universally disabled
-                 ;;(load-theme 'doom-vibrant t)
-                 (load-theme 'doom-city-lights t)
-                 (doom-themes-visual-bell-config)))
+  :custom
+  (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
+  (doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  :config
+  (load-theme 'doom-vibrant t)
+  (doom-themes-visual-bell-config))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

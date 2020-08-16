@@ -31,30 +31,52 @@
 
 (use-package highlight-doxygen
   :ensure t
-  :hook (c-mode-common . highlight-doxygen-mode))
+  :hook
+  (c-mode-common-hook . highlight-doxygen-mode))
 
 (use-package hl-line
   :ensure nil
-  :hook (after-init . global-hl-line-mode))
+  :hook
+  (after-init-hook . global-hl-line-mode))
 
 (use-package paren
   :ensure nil
-  :hook (after-init . show-paren-mode)
-  :config (progn
-            (setq show-paren-when-point-in-periphery t)
-            (setq show-paren-when-point-inside-paren t)))
+  :hook
+  (after-init-hook . show-paren-mode)
+  :custom
+  (show-paren-when-point-in-periphery t)
+  (show-paren-when-point-inside-paren t)
+  :custom-face
+  (show-paren-match ((t (:background unspecified)))))
 
 (use-package rainbow-mode
   :ensure t
-  :hook ((emacs-list-mode web-mode css-mode) . rainbow-mode))
+  :hook
+  ((emacs-lisp-mode-hook web-mode-hook css-mode-hook) . rainbow-mode))
 
 (use-package rainbow-delimiters
   :ensure t
-  :hook (prog-mode . rainbow-delimiters-mode))
+  :hook
+  (prog-mode-hook . rainbow-delimiters-mode))
 
 (use-package whitespace
   :ensure nil
-  :init (setq-default show-trailing-whitespace f))
+  :init
+  (define-minor-mode whitespace-trailing-mode
+    "Toggle trailing visualization (Whitespace Trailing mode).
+
+Inspired by whitespace-newline-mode."
+    :lighter    " nl"
+    :init-value nil
+    :global     nil
+    :group      'whitespace
+    (let ((whitespace-style '(face trailing)))
+      (whitespace-mode (if whitespace-trailing-mode
+			   1 -1)))
+    ;; sync states (running a batch job)
+    (setq whitespace-trailing-mode whitespace-mode))
+  :hook
+  ((prog-mode-hook text-mode-hook) . whitespace-trailing-mode))
 
 (provide 'init-highlight)
 ;;; init-highlight.el ends here

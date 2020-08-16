@@ -30,11 +30,13 @@
 
 (use-package projectile
   :ensure t
-  :hook   ((prog-mode text-mode) . projectile-mode)
-  :config (setq projectile-enable-caching t)
-  ;;(setq projectile-completion-system 'default)
-  (setq projectile-completion-system 'ivy)
-  )
+  :config
+  (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+  (projectile-mode +1)
+  :hook
+  ((prog-mode-hook text-mode-hook) . projectile-mode)
+  :custom
+  (projectile-enable-caching t))
 
 (provide 'init-projectile)
 ;;; init-projectile.el ends here

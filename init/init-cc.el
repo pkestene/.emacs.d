@@ -29,28 +29,54 @@
 ;;; Code:
 
 (use-package cc-mode
-  :ensure t
-  :mode ("\\.[hH]\\'" . c++-mode)
-  :config (progn (setq tab-always-indent 'complete)
-                 (setq c-default-style "bsd")
-                 (setq c-basic-offset 2)
-                 (setq c-offsets-alist '((innamespace . 0)))))
+  :ensure nil
+  :mode
+  ("\\.[hH]\\(h?\\|xx\\|pp\\)\\'" . c++-mode)
+  :custom
+  (c-basic-offset 2)
+  (c-default-style "bsd")
+  (c-offsets-alist '((innamespace . 0)))
+  (c-tab-always-indent 'complete))
 
 ;; handle cuda files
-(use-package cuda-mode
-  :ensure t
-  :commands cuda-mode
-  :mode (("\\.cu\\'" . cuda-mode)
-         ("\\.cuh\\'" . cuda-mode)))
+;; (use-package cuda-mode
+;;   :ensure t
+;;   :commands cuda-mode
+;;   :mode (("\\.cu\\'" . cuda-mode)
+;;          ("\\.cuh\\'" . cuda-mode)))
+
+;; (use-package ccls
+;;   :ensure t
+;;   :after (:all lsp-mode cc-mode))
+;; (setq ccls-executable "/home/pkestene/local/bin/ccls")
 
 (use-package ccls
   :ensure t
-  :after (:all lsp-mode cc-mode))
-(setq ccls-executable "/home/pkestene/local/bin/ccls")
+  :no-require t)
 
 (use-package modern-cpp-font-lock
   :ensure t
-  :hook (c++-mode . modern-c++-font-lock-mode))
+  :hook
+  (c++-mode-hook . modern-c++-font-lock-mode))
+
+(use-package flycheck-clang-analyzer
+  :ensure t
+  :after flycheck
+  :config (flycheck-clang-analyzer-setup))
+
+  ;; https://github.com/emacs-lsp/lsp-ui/issues/190
+(defun flycheck-clang-tidy-setup ()
+  "Setup Flycheck clang-tidy."
+  (add-to-list 'flycheck-checkers 'c/c++-clang-tidy)
+  (when lsp-mode (flycheck-add-next-checker 'lsp-ui '(error . c/c++-clang-tidy))))
+
+(use-package flycheck-clang-tidy
+  :ensure t
+  :after lsp-mode
+  :hook
+  (flycheck-mode-hook . flycheck-clang-tidy-setup)
+  :config
+  (flycheck-add-next-checker 'lsp '(warning . c/c++-clang-tidy)))
 
 (use-package clang-format
   :ensure t
@@ -59,8 +85,8 @@
 ;; https://www.emacswiki.org/emacs/SrSpeedbar
 (use-package sr-speedbar
   :ensure t
-  :defer t
-  :after helm) ; to avoid a conflict with helm package
+  :no-require t)
 
 (provide 'init-cc)
 ;;; init-cc.el ends here
+

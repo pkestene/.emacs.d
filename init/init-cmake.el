@@ -30,7 +30,20 @@
 
 (use-package cmake-mode
   :ensure t
-  :defer t)
+  :no-require t)
+
+(use-package cmake-font-lock
+  :ensure t
+  :init
+  (progn
+    (remove-hook 'cmake-mode-hook 'cmake-font-lock-activate)
+    (defun wrapper-cmake-font-lock-activate ()
+      "Workaround wrapper of cmake-font-lock-activate."
+      (rainbow-delimiters-mode-disable)
+      (cmake-font-lock-activate)
+      (rainbow-delimiters-mode-enable)))
+  :hook
+  (cmake-mode-hook . wrapper-cmake-font-lock-activate))
 
 (provide 'init-cmake)
 ;;; init-cmake.el ends here

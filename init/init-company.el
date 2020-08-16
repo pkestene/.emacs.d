@@ -30,41 +30,23 @@
 
 (use-package company
   :ensure t
-  :hook ((prog-mode TeX-mode) . company-mode)
-  :bind (("C-<tab>" . company-complete))
-  ;; to solve conflicts between yasnippet and company
-  :config (progn (setq company-idle-delay 0.75)
-		 (defvar my-company-point)
-		 (advice-add 'company-complete :before (lambda () (setq my-company-point (point))))
-		 (advice-add 'company-complete :after (lambda () (when (equal my-company-point (point)) (when (fboundp 'yas-expand) (yas-expand)))))))
+  :hook
+  ((prog-mode-hook TeX-mode-hook) . company-mode)
+  :bind
+  (:map company-mode-map ("TAB" . company-indent-or-complete-common))
+  :custom
+  (company-idle-delay 0.25)
+  (company-minimum-prefix-length 2)
+  (company-tooltip-align-annotations t))
 
 (when (>= emacs-major-version 26)
   (use-package company-box
     :ensure t
     :if (display-graphic-p)
-    :hook (company-mode . company-box-mode)))
-
-;; https://github.com/Sarcasm/company-irony
-(use-package company-irony
-  :ensure t
-  :after (company irony)
-  :config (add-to-list 'company-backends 'company-irony))
-
-;; https://github.com/hotpxl/company-irony-c-headers
-(use-package company-irony-c-headers
-  :ensure t
-  :after (company irony)
-  :config (add-to-list 'company-backends 'company-irony-c-headers))
-
-;; Code completion 
-;; you will also have to install irony server: M-x irony-install-server
-;;
-;; https://github.com/Sarcasm/irony-mode
-(use-package irony
-  :ensure t
-  :hook ((objc-mode c-mode c++-mode) . irony-mode)
-  :hook (irony-mode . irony-cdb-autosetup-compile-options)
-  :commands (irony-mode))
+    :hook
+    (company-mode-hook . company-box-mode)
+    :custom
+    (company-box-icons-alist 'company-box-icons-all-the-icons)))
 
 (provide 'init-company)
 ;;; init-company.el ends here

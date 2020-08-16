@@ -1,6 +1,6 @@
-;; init-md.el --- Initialize markdown configuration.
+;;; init-emacs-lisp.el --- Initialize emacs-lisp configuration.
 
-;; Copyright (C) 2019 Thomas Padioleau
+;; Copyright (C) 2020 Thomas Padioleau
 
 ;; Author: Thomas Padioleau <padioleau.thomas@gmail.com>
 ;; URL: https://github.com/tpadioleau/.emacs.d
@@ -24,16 +24,14 @@
 
 ;;; Commentary:
 
-;; Initialize markdown configuration.
+;; Initialize emacs-lisp configuration.
 
 ;;; Code:
 
-(use-package markdown-mode
+(use-package flycheck-package
   :ensure t
-  :mode
-  (("README\\.md\\'" . gfm-mode)
-   ("\\.md\\'" . markdown-mode)
-   ("\\.markdown\\'" . markdown-mode)))
+  :hook
+  (emacs-lisp-mode-hook . flycheck-package-setup))
 
-(provide 'init-md)
-;;; init-md ends here
+(provide 'init-emacs-lisp)
+;;; init-emacs-lisp.el ends here
