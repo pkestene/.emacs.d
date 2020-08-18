@@ -13,7 +13,7 @@ Don't forget to remove any old .emacs.d configuration before cloning.
 
 On ubuntu (e.g. 18.04), just do the following to have emacs-26
 
-```shel
+```shell
 sudo add-apt-repository ppa:kelleyk/emacs
 sudo apt update
 sudo apt install emacs26
@@ -23,7 +23,7 @@ sudo update-alternatives --config emacs
 sudo update-alternatives --config emacsclient
 ```
 
-### Ccls
+### Ccls or clangd
 
 To install [ccls](https://github.com/MaskRay/ccls), follow the steps from the [wiki](https://github.com/MaskRay/ccls/wiki/Build) and make command _ccls_ available in your PATH.
 
@@ -31,11 +31,10 @@ Example:
 ```shell
 git clone https://github.com/MaskRay/ccls.git
 cd ccls; mkdir build; cd build
-cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_INSTALL=/home/pkestene/local/ccls -DCMAKE_PREFIX_PATH=/home/pkestene/install/ccls/github/clang_llvm/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04 ..
+cmake -H. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/pkestene/local/ccls  ..
 make; make install
 # then make sure ccls bin executable is in your PATH env variable
 ```
-
 
 To use ccls with a cmake project using C++ source code:
 
@@ -44,9 +43,11 @@ To use ccls with a cmake project using C++ source code:
 cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON /path/to/sources
 ```
 It will generate a ```compile_commands.json``` file, containing necessary commands to compile source files.
-Then, from the build directory (where ```compile_commands.json``` file is created), if you open a source file, semantic completion and navigation will be enabled.
+Then, you should copy (or make a symbolic link) ```compile_commands.json``` in the project top-level. If you open a source file, semantic completion and navigation will be enabled.
 
-Alternative way of generating a compile commands file : [Bear](https://github.com/rizsotto/Bear) (already available as a regular package in Ubuntu 18.04)
+Alternative way of generating a compile commands file : [Bear](https://github.com/rizsotto/Bear) (already available as a regular package in Ubuntu 18.04). It works well with autotools-based projects.
+
+If you don't want to build ccls, clangd (available as a package on Ubuntu) is a good alternative. It will be used if ccls is not found in your PATH environment variable.
 
 ### Emacs client/server
 
@@ -54,7 +55,7 @@ As emacs startup can be long when multiple plugins are activated, you might cons
 See for example https://www.emacswiki.org/emacs/EmacsAsDaemon#toc2
 
 Here is my systemd config file (```.config/systemd/user/emacsd.service```):
-```ìni
+```ini
 [Unit]
 Description=Emacs: the extensible, self-documenting text editor
 Documentation=man:emacs(1) info:Emacs
