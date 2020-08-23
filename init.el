@@ -83,6 +83,7 @@ There are two things you can do about this warning:
 (push (expand-file-name "init/" user-emacs-directory) load-path)
 (require 'init-highlight)
 (require 'init-ui)
+(require 'init-centaur-tabs)
 
 ;; (require 'init-helm) ;; use either helm or ivy, but not both
 (require 'init-ivy)
