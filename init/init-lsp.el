@@ -31,6 +31,7 @@
 ;; Config to make it lsp-diagnose compliant
 (use-package lsp-mode
   :ensure t
+  :init (setq lsp-keymap-prefix "C-c l")
   :hook
   ((c-mode-hook c++-mode-hook objc-mode-hook TeX-mode-hook
                 python-mode-hook sh-mode-hook) . lsp-deferred)

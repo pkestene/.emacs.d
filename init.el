@@ -94,6 +94,7 @@ There are two things you can do about this warning:
 (require 'init-projectile)
 (require 'init-utils)
 (require 'init-yasnippet)
+(require 'init-treemacs)
 
 ;; Major modes
 (require 'init-cc)
