@@ -13,7 +13,6 @@
         ;;centaur-tabs-show-navigation-buttons t
         centaur-tabs-set-modified-marker t
         centaur-tabs-modifier-marker "*")
-        )
   ;;(centaur-tabs-enable-buffer-reordering)
   ;; Move the currently selected tab to the left of the the last visited tab.
   ;;(setq centaur-tabs-adjust-buffer-order 'left)
