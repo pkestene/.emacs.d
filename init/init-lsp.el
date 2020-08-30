@@ -28,6 +28,14 @@
 
 ;;; Code:
 
+(use-package nxml-mode
+  :ensure t
+  :hook (nxml-mode . lsp)
+  :init (fset 'xml-mode 'nxml-mode)
+  :custom
+  (nxml-slash-auto-complete-flag t)
+  (nxml-auto-insert-xml-declaration-flag t))
+
 ;; Config to make it lsp-diagnose compliant
 (use-package lsp-mode
   :ensure t
@@ -40,6 +48,9 @@
   (lsp-enable-on-type-formatting nil)
   (lsp-prefer-capf t)
   (read-process-output-max (* 1024 1024))
+  (lsp-xml-logs-client nil)
+  (lsp-xml-jar-file (expand-file-name
+                     "~/install/xml/lemminx/org.eclipse.lemminx/target/org.eclipse.lemminx-uber.jar"))
   :config
   (remove-hook 'company-backends 'company-clang)
   (progn
