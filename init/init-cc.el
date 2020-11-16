@@ -32,6 +32,7 @@
   :ensure nil
   :mode
   ("\\.[hH]\\(h?\\|xx\\|pp\\)\\'" . c++-mode)
+  ("\\.tpp\\'" . c++-mode)
   :custom
   (c-basic-offset 2)
   (c-default-style "bsd")
